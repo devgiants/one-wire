@@ -37,6 +37,16 @@ class ReadCommand extends Command
         // TODO check GUID syntax
         // Get GUID
         $guid = $input->getOption(self::GUID_OPTION);
-        echo(exec("cat /sys/bus/w1/devices/$guid/w1_slave"));
+        $value = "";
+
+        // Remove hexa data
+        $data = explode(' ', exec("cat /sys/bus/w1/devices/$guid/w1_slave"));
+        $value = array_pop($data);
+
+        // Remove "t=" or whatever
+        $value = explode('=', $value);
+        $output->write(array_pop($value));
+
+
     }
 }
