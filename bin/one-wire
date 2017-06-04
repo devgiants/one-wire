@@ -27,6 +27,8 @@ if(false !== $manifest) {
     if($manifest->version > $application->getVersion()) {
         echo "Newer version is available (you run {$application->getVersion()} while last stable version is {$manifest->version}). Run self-update command to update";
     }
+    
+    $application->add(new Command\UpdateCommand());
 }
 
 // Register commands
