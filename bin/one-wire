@@ -19,11 +19,14 @@ $application = new Application('one-wire', '@package_version@');
 // Check newer version
 $manifest = file_get_contents(Command\UpdateCommand::MANIFEST_FILE_URL);
 
-$manifest = json_decode($manifest)[0];
+// Only if manifest retrieval worked (at least connected to the internet)
+if(false !== $manifest) {
+    $manifest = json_decode($manifest)[0];
 
-// Display warning
-if($manifest->version > $application->getVersion()) {
-    echo "Newer version is available (you run {$application->getVersion()} while last stable version is {$manifest->version}). Run self-update command to update";
+    // Display warning
+    if($manifest->version > $application->getVersion()) {
+        echo "Newer version is available (you run {$application->getVersion()} while last stable version is {$manifest->version}). Run self-update command to update";
+    }
 }
 
 // Register commands
